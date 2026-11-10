@@ -1,0 +1,43 @@
+#!/bin/sh
+# Pre-commit guard: block staging of secrets. Version control is irreversible once pushed,
+# so the highest-value hook is the one that stops a credential entering history at all.
+#
+# Install (once per clone):  git config core.hooksPath .git-hooks
+#
+# Deliberately narrow: it matches the credential SHAPES this project uses, not the word
+# "token" (which appears legitimately throughout the docs).
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$STAGED" ] && exit 0
+
+FAIL=0
+
+# 1. A .env file must never be committed (only .env.example).
+for f in $STAGED; do
+  case "$f" in
+    .env|.env.*|*/.env|*/.env.*)
+      case "$f" in
+        *.example|*.sample) ;;
+        *) echo "pre-commit: refusing to commit secrets file '$f'" >&2; FAIL=1 ;;
+      esac
+      ;;
+  esac
+done
+
+# 2. Credential shapes inside staged additions.
+PATTERNS='npg_[A-Za-z0-9]{10,}|cfut_[A-Za-z0-9]{10,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk_live_[A-Za-z0-9]{10,}|sbp_[a-f0-9]{30,}|postgres(ql)?://[^:/@ ]+:[^@ ]{8,}@'
+
+HITS=$(git diff --cached -U0 -- $STAGED | grep -E '^\+' | grep -Ev '^\+\+\+' | grep -En "$PATTERNS")
+
+if [ -n "$HITS" ]; then
+  echo "pre-commit: possible credential in staged content:" >&2
+  echo "$HITS" | cut -c1-160 >&2
+  FAIL=1
+fi
+
+if [ "$FAIL" -ne 0 ]; then
+  echo "" >&2
+  echo "Commit blocked. See AGENTS.md hard rule H1." >&2
+fi
+
+exit $FAIL

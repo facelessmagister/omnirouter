@@ -1,0 +1,45 @@
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rules:
+    name: Hard rules + docs present
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+      # Deliberately runs before install: it needs no dependencies, so a rules
+      # violation fails in seconds rather than after a full install.
+      - run: node scripts/check-rules.mjs
+
+  verify:
+    name: typecheck / lint / test / contract
+    runs-on: ubuntu-latest
+    needs: rules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.7.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm test:integration
+        env:
+          SUPABASE_DB_URL_TEST: ${{ secrets.SUPABASE_DB_URL_TEST }}
+      - run: pnpm test:contract

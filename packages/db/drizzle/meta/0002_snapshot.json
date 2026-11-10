@@ -1,0 +1,812 @@
+{
+  "id": "71161051-8818-4602-b17c-e4d288d809f2",
+  "prevId": "3609397c-6f06-47d5-820e-3da6b3291f0f",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.mcp_servers": {
+      "name": "mcp_servers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description_source": {
+          "name": "description_source",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'registry'"
+        },
+        "intent_summary": {
+          "name": "intent_summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transport_type": {
+          "name": "transport_type",
+          "type": "transport_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endpoint_url": {
+          "name": "endpoint_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "package_identifier": {
+          "name": "package_identifier",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "install_command": {
+          "name": "install_command",
+          "type": "varchar(512)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "repository_url": {
+          "name": "repository_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source": {
+          "name": "source",
+          "type": "server_source",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_verified_at": {
+          "name": "owner_verified_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "owner_api_key_id": {
+          "name": "owner_api_key_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "server_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending_grade'"
+        },
+        "auth_mode": {
+          "name": "auth_mode",
+          "type": "auth_mode",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monetization_model": {
+          "name": "monetization_model",
+          "type": "monetization_model",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'free'"
+        },
+        "mcp_definition": {
+          "name": "mcp_definition",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "auth_requirements": {
+          "name": "auth_requirements",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monetization": {
+          "name": "monetization",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{\"model\":\"free\"}'::jsonb"
+        },
+        "trust_score": {
+          "name": "trust_score",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "uptime_percentage": {
+          "name": "uptime_percentage",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "latency_p50_ms": {
+          "name": "latency_p50_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "latency_p95_ms": {
+          "name": "latency_p95_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "drift_detected": {
+          "name": "drift_detected",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "consecutive_failures": {
+          "name": "consecutive_failures",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "verification_class": {
+          "name": "verification_class",
+          "type": "verification_class",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "popularity_score": {
+          "name": "popularity_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verified_tier": {
+          "name": "verified_tier",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_listed_at": {
+          "name": "first_listed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "embedding": {
+          "name": "embedding",
+          "type": "vector(1024)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "embedding_model": {
+          "name": "embedding_model",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "embedding_input_hash": {
+          "name": "embedding_input_hash",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_graded_at": {
+          "name": "last_graded_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "next_grade_at": {
+          "name": "next_grade_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "mcp_servers_slug_uidx": {
+          "name": "mcp_servers_slug_uidx",
+          "columns": [
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mcp_servers_endpoint_uidx": {
+          "name": "mcp_servers_endpoint_uidx",
+          "columns": [
+            {
+              "expression": "endpoint_url",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"mcp_servers\".\"endpoint_url\" IS NOT NULL",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mcp_servers_package_uidx": {
+          "name": "mcp_servers_package_uidx",
+          "columns": [
+            {
+              "expression": "package_identifier",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"mcp_servers\".\"package_identifier\" IS NOT NULL",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mcp_servers_embedding_hnsw_idx": {
+          "name": "mcp_servers_embedding_hnsw_idx",
+          "columns": [
+            {
+              "expression": "embedding",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "vector_cosine_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "hnsw",
+          "with": {
+            "m": 16,
+            "ef_construction": 64
+          }
+        },
+        "mcp_servers_filter_idx": {
+          "name": "mcp_servers_filter_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "transport_type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "auth_mode",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "monetization_model",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mcp_servers_next_grade_idx": {
+          "name": "mcp_servers_next_grade_idx",
+          "columns": [
+            {
+              "expression": "next_grade_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"mcp_servers\".\"status\" <> 'offline'",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "slug_format": {
+          "name": "slug_format",
+          "value": "\"mcp_servers\".\"slug\" ~ '^[a-z0-9][a-z0-9-]{1,126}[a-z0-9]$'"
+        },
+        "remote_requires_endpoint": {
+          "name": "remote_requires_endpoint",
+          "value": "(\"mcp_servers\".\"transport_type\" = 'stdio') = (\"mcp_servers\".\"endpoint_url\" IS NULL)"
+        },
+        "stdio_requires_package": {
+          "name": "stdio_requires_package",
+          "value": "\"mcp_servers\".\"transport_type\" <> 'stdio' OR \"mcp_servers\".\"package_identifier\" IS NOT NULL"
+        },
+        "endpoint_https": {
+          "name": "endpoint_https",
+          "value": "\"mcp_servers\".\"endpoint_url\" IS NULL OR \"mcp_servers\".\"endpoint_url\" LIKE 'https://%'"
+        },
+        "auth_mode_matches_json": {
+          "name": "auth_mode_matches_json",
+          "value": "\"mcp_servers\".\"auth_mode\"::text = \"mcp_servers\".\"auth_requirements\"->>'mode'"
+        },
+        "monetization_matches_json": {
+          "name": "monetization_matches_json",
+          "value": "\"mcp_servers\".\"monetization_model\"::text = \"mcp_servers\".\"monetization\"->>'model'"
+        },
+        "active_has_embedding": {
+          "name": "active_has_embedding",
+          "value": "\"mcp_servers\".\"status\" NOT IN ('active','degraded') OR (\"mcp_servers\".\"embedding\" IS NOT NULL AND \"mcp_servers\".\"mcp_definition\" IS NOT NULL)"
+        },
+        "trust_range": {
+          "name": "trust_range",
+          "value": "\"mcp_servers\".\"trust_score\" BETWEEN 0 AND 100"
+        },
+        "active_not_broken": {
+          "name": "active_not_broken",
+          "value": "\"mcp_servers\".\"status\" NOT IN ('active','degraded') OR \"mcp_servers\".\"verification_class\" IS DISTINCT FROM 'broken'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.mcp_tools": {
+      "name": "mcp_tools",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "server_id": {
+          "name": "server_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tool_name": {
+          "name": "tool_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tool_title": {
+          "name": "tool_title",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tool_description": {
+          "name": "tool_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "input_schema": {
+          "name": "input_schema",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "output_schema": {
+          "name": "output_schema",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "annotations": {
+          "name": "annotations",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "schema_fingerprint": {
+          "name": "schema_fingerprint",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "embedding": {
+          "name": "embedding",
+          "type": "vector(1024)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "embedding_model": {
+          "name": "embedding_model",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "mcp_tools_server_tool_uidx": {
+          "name": "mcp_tools_server_tool_uidx",
+          "columns": [
+            {
+              "expression": "server_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "tool_name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mcp_tools_embedding_hnsw_idx": {
+          "name": "mcp_tools_embedding_hnsw_idx",
+          "columns": [
+            {
+              "expression": "embedding",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "vector_cosine_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "hnsw",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "mcp_tools_server_id_mcp_servers_id_fk": {
+          "name": "mcp_tools_server_id_mcp_servers_id_fk",
+          "tableFrom": "mcp_tools",
+          "tableTo": "mcp_servers",
+          "columnsFrom": [
+            "server_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "tool_embedding_model_present": {
+          "name": "tool_embedding_model_present",
+          "value": "\"mcp_tools\".\"embedding\" IS NULL OR \"mcp_tools\".\"embedding_model\" IS NOT NULL"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.server_sources": {
+      "name": "server_sources",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "server_id": {
+          "name": "server_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source": {
+          "name": "source",
+          "type": "source_kind",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "listing_url": {
+          "name": "listing_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_popularity": {
+          "name": "raw_popularity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verified_tier": {
+          "name": "verified_tier",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_seen_at": {
+          "name": "first_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "delisted_at": {
+          "name": "delisted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "server_sources_unique_idx": {
+          "name": "server_sources_unique_idx",
+          "columns": [
+            {
+              "expression": "server_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "source",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "source_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "server_sources_source_pop_idx": {
+          "name": "server_sources_source_pop_idx",
+          "columns": [
+            {
+              "expression": "source",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "raw_popularity",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "server_sources_server_id_mcp_servers_id_fk": {
+          "name": "server_sources_server_id_mcp_servers_id_fk",
+          "tableFrom": "server_sources",
+          "tableTo": "mcp_servers",
+          "columnsFrom": [
+            "server_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.auth_mode": {
+      "name": "auth_mode",
+      "schema": "public",
+      "values": [
+        "none",
+        "byok",
+        "vercel_connect"
+      ]
+    },
+    "public.grade_outcome": {
+      "name": "grade_outcome",
+      "schema": "public",
+      "values": [
+        "pass",
+        "degraded",
+        "drift",
+        "fail",
+        "error"
+      ]
+    },
+    "public.monetization_model": {
+      "name": "monetization_model",
+      "schema": "public",
+      "values": [
+        "free",
+        "external_payment_link",
+        "stripe_connect_direct"
+      ]
+    },
+    "public.server_source": {
+      "name": "server_source",
+      "schema": "public",
+      "values": [
+        "crawler",
+        "vendor_registration",
+        "manual"
+      ]
+    },
+    "public.server_status": {
+      "name": "server_status",
+      "schema": "public",
+      "values": [
+        "pending_grade",
+        "active",
+        "degraded",
+        "drift_quarantined",
+        "offline"
+      ]
+    },
+    "public.source_kind": {
+      "name": "source_kind",
+      "schema": "public",
+      "values": [
+        "official_registry",
+        "smithery",
+        "apify",
+        "claude_marketplace",
+        "claude_plugins_repo",
+        "hermes_marketplace",
+        "github",
+        "npm",
+        "pypi",
+        "well_known",
+        "vendor_registration",
+        "legacy_import"
+      ]
+    },
+    "public.transport_type": {
+      "name": "transport_type",
+      "schema": "public",
+      "values": [
+        "http",
+        "sse",
+        "stdio"
+      ]
+    },
+    "public.verification_class": {
+      "name": "verification_class",
+      "schema": "public",
+      "values": [
+        "verified",
+        "oauth_required",
+        "byok_required",
+        "payment_required",
+        "broken"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
